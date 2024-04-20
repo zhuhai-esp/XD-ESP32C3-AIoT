@@ -1,7 +1,7 @@
 # XD-ESP32C3-AIoT
 立创·实战派ESP32-C3 开发板 学习实践
 
-### 实战派基于PlatformIO开发
+### 实战派基于PlatformIO(Arduino)开发
 
 #### 配置说明
 * 配置8M Flash(默认配置是4MB)
@@ -42,3 +42,12 @@ build_flags =
     -DSMOOTH_FONT=1
     -DSPI_FREQUENCY=27000000
 ```
+
+* LGFX显示接入，触摸配置
+```
+cfg.i2c_port = 0;    // Select I2C to use (0 or 1)
+cfg.i2c_addr = 0x38; // I2C device address number
+cfg.pin_sda = 0;     // pin number where SDA is connected
+cfg.pin_scl = 1;     // pin number to which SCL is connected
+```
+
