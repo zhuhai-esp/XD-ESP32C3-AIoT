@@ -25,8 +25,7 @@ void inline lv_drivers_init() {
       tft.endWrite();
     }
     tft.pushImageDMA(area->x1, area->y1, area->x2 - area->x1 + 1,
-                     area->y2 - area->y1 + 1,
-                     (lgfx::rgb565_t *)&color_p->full);
+                     area->y2 - area->y1 + 1, (lgfx::rgb565_t *)&color_p->full);
     lv_disp_flush_ready(disp);
   };
   disp_drv.hor_res = LV_DISP_HOR_RES;
@@ -139,6 +138,14 @@ void inline setupOTAConfig() {
   ArduinoOTA.begin();
 }
 
+void inline startConfigTime() {
+  const int timeZone = 8 * 3600;
+  configTime(timeZone, 0, "ntp6.aliyun.com", "cn.ntp.org.cn", "ntp.ntsc.ac.cn");
+  while (time(nullptr) < 8 * 3600 * 2) {
+    delay(500);
+  }
+}
+
 void setup() {
   Serial.begin(115200);
   tft.init();
@@ -150,7 +157,7 @@ void setup() {
   ui_init();
   show_center_msg("Please Config WiFi With ESP-Touch!");
   autoConfigWifi();
-  configTime(8 * 3600, 60, "ntp.ntsc.ac.cn", "ntp1.aliyun.com");
+  startConfigTime();
   setupOTAConfig();
   showClientIP();
 }
@@ -165,6 +172,5 @@ void loop() {
   if (ms - check5ms > 5) {
     check5ms = ms;
     lv_timer_handler();
-    lv_tick_inc(5);
   }
 }
