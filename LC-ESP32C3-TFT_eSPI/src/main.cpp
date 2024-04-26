@@ -13,7 +13,7 @@ void setup() {
   analogWrite(TFT_BL, 200);
 
   tft.setTextFont(4);
-  tft.drawString("Hello World!!", 0, 0);
+  tft.drawString("Hello TFT_eSPI!!", 0, 0);
   tft.drawRoundRect(20, 30, 200, 100, 12, TFT_YELLOW);
   tft.drawCircle(150, 150, 40, TFT_RED);
   tft.drawRect(60, 60, 30, 40, TFT_BLUE);
