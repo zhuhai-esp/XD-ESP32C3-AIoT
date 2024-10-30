@@ -8,9 +8,9 @@ LGFX tft;
 #define LV_DISP_HOR_RES 320
 #define LV_DISP_VER_RES 240
 
-static const uint32_t buf_size = LV_DISP_HOR_RES * 20;
-static lv_color_t dis_buf1[buf_size];
-static lv_color_t dis_buf2[buf_size];
+static const uint32_t buf_size =
+    LV_DISP_HOR_RES * LV_DISP_VER_RES * sizeof(lv_color_t);
+static lv_color_t *dis_buf1;
 
 void inline lv_touch_init() {
   auto *indev_touchpad = lv_indev_create();
@@ -39,7 +39,8 @@ void inline lv_disp_init() {
   };
   lv_display_set_flush_cb(disp, f_disp);
   auto mode = LV_DISPLAY_RENDER_MODE_PARTIAL;
-  lv_display_set_buffers(disp, dis_buf1, dis_buf2, buf_size, mode);
+  dis_buf1 = (lv_color_t *)malloc(buf_size);
+  lv_display_set_buffers(disp, dis_buf1, nullptr, buf_size, mode);
 }
 
 void setup() {
